@@ -1,0 +1,50 @@
+---
+title: "p8105_hw4_cl3664"
+author: "Chen Li"
+date: "October 25, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggridges)
+library(ggthemes)
+library(haven)
+library(janitor)
+library(knitr)
+library(lubridate)
+library(hexbin)
+library(readxl)
+
+```
+
+
+Problem 2
+```{r}
+pols = read.csv("./fivethirtyeight_datasets/pols-month.csv")
+gdp = read.csv("./fivethirtyeight_datasets/GDP.csv")
+```
+
+```{r}
+pols = mutate(pols, mon = lubridate::floor_date(as.POSIXct(pols$mon), unit = "month"))
+colnames(gdp) = c("mon","gdpvalue")
+gdp = mutate(gdp, mon = as.POSIXct(gdp$mon))
+```
+
+```{r}
+five38 = right_join(pols, gdp) %>%
+mutate(president = ifelse((prez_dem == 1), "dem", "gop"))
+```
+
+```{r}
+five38 %>%
+  ggplot(aes(x=mon, y=gdpvalue)) +
+  geom_point(aes(color = president, group = president)) +
+  geom_line()
+```
+
+
