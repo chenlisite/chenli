@@ -44,7 +44,7 @@ mutate(president = ifelse((prez_dem == 1), "dem", "gop"))
 
 ```{r}
 five38$gdpvalue <- as.numeric(as.character(five38$gdpvalue))
-five38%>%
+five38 %>%
     group_by(president) %>%
     ggplot(aes(x = mon, y = gdpvalue, color = president)) +
     geom_point()+
@@ -52,6 +52,7 @@ five38%>%
          x = "Time",
          y = "GDP")
 ```
+Conclusion: After clean data, we draw a plot of GDP varies with time and show the party of president. We can find that the party of president changed every about 10 years and GDP is decreasing now under democratic party. 
 
 
 
