@@ -43,10 +43,16 @@ mutate(president = ifelse((prez_dem == 1), "dem", "gop"))
 ```
 
 ```{r}
-five38 %>%
-  ggplot(aes(x=mon, y=gdpvalue)) +
-  geom_point(aes(color = president, group = president)) +
-  geom_line()
+five38$gdpvalue <- as.numeric(as.character(five38$gdpvalue))
+five38%>%
+    group_by(president) %>%
+    ggplot(aes(x = mon, y = gdpvalue, color = president)) +
+    geom_point()+
+    labs(title = "GDP varies over time related to party of president",
+         x = "Time",
+         y = "GDP")
 ```
+
+
 
 
